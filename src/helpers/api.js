@@ -1,1 +1,1 @@
-export const api = 'http://localhost:3991/api/v1/'
+export const api = 'https://ekki-backend.herokuapp.com/api/v1/'
