@@ -3,10 +3,18 @@ const initialState = user ? { loggedIn: true, user, account: {}, cards: [] } : {
 
 export function user(state = initialState, action) {
   switch (action.type) {
+    case 'TRANSFER':
+      return state
+    case 'DEPOSIT':
+      return state
+    case 'GET_CONTACTS':
+      return {
+        ...state,
+        contacts: action.contacts
+      }
     case 'GET_CARDS':
       return {
-        account: state.account,
-        user: state.user,
+        ...state,
         cards: action.cards
       }
     case 'UPDATE_CARDS':
@@ -29,8 +37,8 @@ export function user(state = initialState, action) {
       }
     case 'GET_ACCOUNT':
       return {
-        account: action.account,
-        user: state.user
+        ...state,
+        account: action.account
       }
     case 'REGISTER_SUCCESS':
       return {
@@ -51,11 +59,14 @@ export function user(state = initialState, action) {
         user: action.user
       }
     case 'LOGIN_FAILURE':
-      return {}
+      return {
+        loginFailed: true
+      }
     case 'LOGOUT':
       return {}
     case 'SERVICE_FAILURE':
       return {
+        ...state,
         error: action.error
       }
     default:

@@ -2,6 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { userActions } from '../actions'
+import './Dashboard.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCreditCard, faLocationArrow, faHandHoldingUsd, faHistory  } from '@fortawesome/free-solid-svg-icons'
+
 
 class Dashboard extends React.Component {
     componentDidMount() {
@@ -13,13 +17,50 @@ class Dashboard extends React.Component {
     render() {
         const { user, account } = this.props;
         return (
-            <div className="col-md-6 col-md-offset-3">
-                <h1>Hi { user.name }!</h1>
-                <p>Conta: { account.number }</p>
-                <p>Saldo: { account.balance }</p>
-                <p>
-                    <Link to="/login">Logout</Link>
-                </p>
+            <div className="">
+                <div >
+                    <h2 className="logo">ekki</h2>
+                </div>
+                <div className="wrapper">
+                    <h4>Olá, {user.name}</h4>
+                    <p><strong>Conta:</strong> { account.number }</p>
+                    <p><strong>Saldo:</strong> R$ { account.balance }</p>
+                    <p>
+                        <Link className="btn btn-outline-danger" to="/login">Sair</Link>
+                    </p>
+                </div>
+                <div className="d-flex flex-row justify-content-center flex-wrap">
+                    <div className="p-2 flex-fill">
+                        <Link to="/transfer" className="btn btn-block btn-outline-light">
+                            <FontAwesomeIcon icon={faLocationArrow} size="lg"/>
+                            <br/>
+                            Transferir
+                        </Link>
+                    </div>
+                    <div className="p-2 flex-fill">
+                        <Link to="/deposit" className="btn btn-block btn-outline-light">
+                            <FontAwesomeIcon icon={faHandHoldingUsd} size="lg"/>
+                            <br/>
+                            Depositar
+                        </Link>
+                    </div>
+                    <div className="p-2 flex-fill">
+                        <Link to="/transactions/history" className="btn btn-block btn-outline-light">
+                            <FontAwesomeIcon icon={faHistory} size="lg"/>
+                            <br/>
+                            Histórico de Transações
+                        </Link>
+                    </div>
+                    <div className="p-2 flex-fill">
+                        <Link to="/cards" className="btn btn-block btn-outline-light">
+                            <FontAwesomeIcon icon={faCreditCard} size="lg"/>
+                            <br/>
+                            Cartões de Crédito
+                        </Link>
+                    </div>
+                </div>
+                
+                
             </div>
         );
     }

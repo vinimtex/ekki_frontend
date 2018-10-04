@@ -2,6 +2,7 @@ import { userService } from '../services';
 import { accountService } from '../services';
 import { cardsService } from '../services';
 import { history } from '../helpers';
+import { alertActions } from './alert.action';
 
 export const userActions = {
     login,
@@ -11,7 +12,11 @@ export const userActions = {
     getCards,
     updateCard,
     createCard,
-    deleteCard
+    deleteCard,
+    getContacts,
+    transfer,
+    deposit,
+    getTransactionsHistory
 };
 
 function login(email, password) {
@@ -22,9 +27,12 @@ function login(email, password) {
             .then(
                 user => { 
                     dispatch(success(user));
+                    dispatch(alertActions.toastAlert('Login efetuado com sucesso', '', 'success'))
+                    window.location = '/'
                 },
                 error => {
                     dispatch(failure(error));
+                    dispatch(alertActions.toastAlert('E-mail ou senha incorretos', '', 'error'))
                 }
             );
     };
@@ -40,9 +48,11 @@ function register(name, document_number, birth, email, password) {
             .then(
                 user => { 
                     dispatch(success(user));
+                    dispatch(alertActions.toastAlert('Cadastro efetuado com sucesso!', '', 'success'))
                 },
                 error => {
                     dispatch(failure(error));
+                    dispatch(alertActions.toastAlert('Erro ao se cadastrar, tenha certeza que você preencheu todos os campos', '', 'error'))
                 }
             );
     };
@@ -121,6 +131,7 @@ function createCard(userId, inputs) {
     function failure(error) { return { type: 'REGISTER_FAILURE', error } }
 }
 
+
 function deleteCard(userId, cardId) {
     return dispatch => {
         cardsService.deleteCard(userId, cardId)
@@ -135,5 +146,76 @@ function deleteCard(userId, cardId) {
             );
     };
     function success(card) { return { type: 'DELETE_CARDS', card } }
+    function failure(error) { return { type: 'SERVICE_FAILURE', error } }
+}
+
+function getContacts(userId) {
+    return dispatch => {
+        userService.getContacts(userId)
+            .then(
+                contacts => { 
+                    dispatch(success(contacts));
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+    function success(contacts) { return { type: 'GET_CONTACTS', contacts } }
+    function failure(error) { return { type: 'SERVICE_FAILURE', error } }
+}
+
+function transfer(userId, data) {
+    return dispatch => {
+        accountService.transfer(userId, data)
+            .then(
+                transference => { 
+                    dispatch(success(transference));
+                    dispatch(userActions.getAccount(userId))
+                    dispatch(alertActions.toastAlert('Transferência efetuada com sucesso!', transfer.id, 'success'))
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.toastAlert('Transação não aprovada, verifique se a conta do favorecido existe ou se sua senha está correta.', '', 'error'))
+                }
+            );
+    };
+    function success(transference) { return { type: 'TRANSFER', transference } }
+    function failure(error) { return { type: 'SERVICE_FAILURE', error } }
+}
+
+function deposit(userId, data) {
+    return dispatch => {
+        accountService.deposit(userId, data)
+            .then(
+                transference => { 
+                    dispatch(success(transference));
+                    dispatch(userActions.getAccount(userId))
+                    dispatch(alertActions.toastAlert('Depósito efetuado com sucesso!', transfer.id, 'success'))
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.toastAlert('Erro ao realizar seu depósito.', '', 'error'))
+                }
+            );
+    };
+    function success(transference) { return { type: 'DEPOSIT', transference } }
+    function failure(error) { return { type: 'SERVICE_FAILURE', error } }
+}
+
+function getTransactionsHistory(userId) {
+    return dispatch => {
+        accountService.getTransactionsHistory(userId)
+            .then(
+                transactions => { 
+                    dispatch(success(transactions));
+                },
+                error => {
+                    dispatch(failure(error));
+                    dispatch(alertActions.toastAlert('Erro ao recuperar seu histórico de transações.', '', 'error'))
+                }
+            );
+    };
+    function success(transactions) { return { type: 'HISTORY', transactions } }
     function failure(error) { return { type: 'SERVICE_FAILURE', error } }
 }

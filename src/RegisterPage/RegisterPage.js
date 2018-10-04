@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Redirect } from 'react-router-dom'
+import { Redirect, Link } from 'react-router-dom'
 import { userActions } from '../actions'
 
 class RegisterPage extends React.Component {
@@ -14,7 +14,6 @@ class RegisterPage extends React.Component {
             email: '',
             password: '',
             email: '',
-            password: '',
             submitted: false,
             redirect: false
         };
@@ -47,52 +46,55 @@ class RegisterPage extends React.Component {
             return <Redirect to="/login" />
         }
         return (
-            <div className="d-flex justify-content-center">
-                <h2>Ekki</h2>
-                <p>Crie uma conta!</p>
-                <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !name ? ' has-error' : '')}>
-                        <label htmlFor="name">Nome Completo</label>
-                        <input type="text" className="form-control" name="name" value={name} onChange={this.handleChange} />
-                        {submitted && !name &&
-                            <div className="help-block">Preencha seu nome completo</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !document_number ? ' has-error' : '')}>
-                        <label htmlFor="document_numer">CPF</label>
-                        <input type="text" className="form-control" name="document_number" value={document_number} onChange={this.handleChange} />
-                        {submitted && !document_number &&
-                            <div className="help-block">Preencha seu CPF</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !birth ? ' has-error' : '')}>
-                        <label htmlFor="birth">Data de Nascimento</label>
-                        <input type="date" className="form-control" name="birth" value={birth} onChange={this.handleChange} />
-                        {submitted && !birth &&
-                            <div className="help-block">Preencha sua data de nascimento</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
-                        <label htmlFor="email">Email</label>
-                        <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
-                        {submitted && !email &&
-                            <div className="help-block">Preencha seu e-mail</div>
-                        }
-                    </div>
-                    <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
-                        <label htmlFor="password">Senha</label>
-                        <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
-                        {submitted && !password &&
-                            <div className="help-block">Preencha sua Senha</div>
-                        }
-                    </div>
-                    <div className="form-group">
-                        <button className="btn btn-primary">Criar Conta Bancária</button>
-                        {loggingIn &&
-                            <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-                        }
-                    </div>
-                </form>
+            <div>
+            <h2 className="logo">ekki</h2>
+                <div className="wrapper">
+                    <h3 className="text-center">Abra sua conta</h3>
+                    <form name="form" onSubmit={this.handleSubmit}>
+                        <div className={'form-group' + (submitted && !name ? ' has-error' : '')}>
+                            <label htmlFor="name">Nome Completo</label>
+                            <input type="text" className="form-control" name="name" value={name} onChange={this.handleChange} />
+                            {submitted && !name &&
+                                <div className="help-block">Preencha seu nome completo</div>
+                            }
+                        </div>
+                        <div className={'form-group' + (submitted && !document_number ? ' has-error' : '')}>
+                            <label htmlFor="document_numer">CPF</label>
+                            <input type="text" className="form-control" name="document_number" value={document_number} onChange={this.handleChange} />
+                            {submitted && !document_number &&
+                                <div className="help-block">Preencha seu CPF</div>
+                            }
+                        </div>
+                        <div className={'form-group' + (submitted && !birth ? ' has-error' : '')}>
+                            <label htmlFor="birth">Data de Nascimento</label>
+                            <input type="date" className="form-control" name="birth" value={birth} onChange={this.handleChange} />
+                            {submitted && !birth &&
+                                <div className="help-block">Preencha sua data de nascimento</div>
+                            }
+                        </div>
+                        <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                            <label htmlFor="email">Email</label>
+                            <input type="text" className="form-control" name="email" value={email} onChange={this.handleChange} />
+                            {submitted && !email &&
+                                <div className="help-block">Preencha seu e-mail</div>
+                            }
+                        </div>
+                        <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+                            <label htmlFor="password">Senha</label>
+                            <input type="password" className="form-control" name="password" value={password} onChange={this.handleChange} />
+                            {submitted && !password &&
+                                <div className="help-block">Preencha sua Senha</div>
+                            }
+                        </div>
+                        <div className="form-group">
+                            <button className="btn btn-outline-success float-right">Criar Conta Bancária</button>
+                            <Link className="btn btn-outline-secondary " to="/login">Voltar</Link>
+                            {loggingIn &&
+                                <img src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
+                            }
+                        </div>
+                    </form>
+                </div>
             </div>
         );
     }

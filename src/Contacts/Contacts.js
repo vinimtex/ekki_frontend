@@ -3,11 +3,6 @@ import { connect } from 'react-redux'
 import { Redirect, Link } from 'react-router-dom'
 import { userActions } from '../actions'
 import $ from 'jquery'
-import './Cards.css';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCcMastercard, faCcVisa  } from '@fortawesome/free-brands-svg-icons'
-import { faCreditCard, faTrash, faEdit  } from '@fortawesome/free-solid-svg-icons'
 
 class Cards extends React.Component {
     constructor(props) {
@@ -176,7 +171,7 @@ class Cards extends React.Component {
                                         <div className="help-block">Erro ao detectar a bandeira do seu cartão de crédito</div>
                                     }
                                 </div>
-                                <button type="submit" className="btn btn-primary btn-block">{ editingCard ? 'Editar' : 'Cadastrar' }</button>
+                                <button type="submit" className="btn btn-primary">{ editingCard ? 'Editar' : 'Cadastrar' }</button>
                             </form>
                         </div>
                         <div className="modal-footer">
@@ -189,17 +184,6 @@ class Cards extends React.Component {
         )
     }
 
-    renderCardIssuerIcon(issuer) {
-        switch(issuer) {
-            case 'mastercard':
-                return <FontAwesomeIcon icon={faCcMastercard} size="5x"/>
-            case 'visa':
-                return <FontAwesomeIcon icon={faCcVisa} size="5x"/>
-            default:
-                return <FontAwesomeIcon icon={faCreditCard} size="5x"/> 
-        }
-    }
-
     render() {
         const { cards, user } = this.props;
         const { showCardModal, cardInput, editingCard } = this.state;
@@ -207,50 +191,26 @@ class Cards extends React.Component {
         return (
           <div className="">
                 { showCardModal ? this.renderModal() : '' }
-                <h2 class="logo">ekki</h2>
-                <div className="wrapper-fill">
-                    <h3 className="text-center">Meus Cartões de Créditos</h3>
-                    <div className="d-flex flex-row justify-content-center flex-wrap">
-                    {cards ? cards.map((card, index) =>
-                        <div className="p-2 flex-fill">
-                            <div className="card" key={card.id}>
-                                <div className="card-body">
-                                    <h5 className="card-title">Terminado em {card.last_four_digits}</h5>
-                                    <h6 className="card-subtitle mb-2 text-muted">
-                                        {this.renderCardIssuerIcon(card.issuer)}
-                                    </h6>
-                                    <div className="card-text">
-                                        <ul className="list-group">
-                                            <li className="list-group-item">Expira em: {card.expiration_month}/{card.expiration_year}</li>
-                                            <li className="list-group-item">{card.card_holder}</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div className="card-footer"> 
-                                    <a href="" className="card-link" onClick={ (e) => this.openCardModal(e, true, card) }>
-                                        <FontAwesomeIcon icon={faEdit} size="lg"/>
-                                        Editar
-                                    </a>
-                                    <a href="" className="card-link float-right" onClick={ (e) => this.handleDeleteCard(e, card.id) }>
-                                        <FontAwesomeIcon icon={faTrash} size="lg"/>
-                                        Remover
-                                    </a>
-                                </div>
-                            </div>
+                <h2>Ekki</h2>
+                <p>Seus Contatos/Favorecidos</p>
+                <div className="row">
+                  {cards.map((card, index) =>
+                      <div className="card" key={card.id}>
+                        <div className="card-body">
+                          <h5 className="card-title">Terminado em {card.last_four_digits}</h5>
+                          <h6 className="card-subtitle mb-2 text-muted">{ card.issuer }</h6>
+                          <div className="card-text">
+                            <ul>
+                              <li>Expira em: {card.expiration_month}/{card.expiration_year}</li>
+                            </ul>
+                          </div>
+                          <a href="" className="card-link" onClick={ (e) => this.openCardModal(e, true, card) }>Editar</a>
+                          <a href="" className="card-link" onClick={ (e) => this.handleDeleteCard(e, card.id) }>Remover</a>
                         </div>
-                    ) : ''}
-                    </div>
+                      </div>
+                  )}
                 </div>
-                <div className="d-flex flex-row justify-content-center flex-wrap">
-                    <div className="p-2 flex-fill">
-                        <button className="btn btn-outline-light btn-block" onClick={ (e) => this.openCardModal(e, false) }>Cadastrar Cartão de Crédito</button>
-                    </div>
-                    <div className="p-2 flex-fill">
-                        <Link className="btn btn-outline-light btn-block" to="/">Voltar</Link>
-                    </div>
-                </div>
-                
-                
+                <button className="btn btn-primary" onClick={ (e) => this.openCardModal(e, false) }>Adicionar Contato/Favorecido</button>
             </div>
         );
     }

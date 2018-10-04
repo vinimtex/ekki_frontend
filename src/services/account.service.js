@@ -2,7 +2,10 @@ import { api } from '../helpers'
 import { tokenHeader } from '../helpers'
 
 export const accountService = {
-    getAccount
+    getAccount,
+    transfer,
+    deposit,
+    getTransactionsHistory
 };
 
 function getAccount(userId) {
@@ -18,19 +21,57 @@ function getAccount(userId) {
         });
 }
 
+function transfer(fromUserId, data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: tokenHeader(),
+        body: JSON.stringify(data)
+    };
+
+    return fetch(api + 'users/' + fromUserId + '/account/transfer', requestOptions)
+        .then(handleResponse)
+        .then(transfer => {
+            return transfer;
+        });
+}
+
+function deposit(fromUserId, data) {
+    const requestOptions = {
+        method: 'POST',
+        headers: tokenHeader(),
+        body: JSON.stringify(data)
+    };
+
+    return fetch(api + 'users/' + fromUserId + '/account/deposit', requestOptions)
+        .then(handleResponse)
+        .then(transfer => {
+            return transfer;
+        });
+}
+
+function getTransactionsHistory(fromUserId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: tokenHeader()
+    };
+
+    return fetch(api + 'users/' + fromUserId + '/transactions', requestOptions)
+        .then(handleResponse)
+        .then(transactions => {
+            return transactions;
+        });
+}
+
+
 function handleResponse(response) {
     return response.text().then(text => {
-        const data = text && JSON.parse(text);
+        
         if (!response.ok) {
-            if (response.status === 401) {
-                // auto logout if 401 response returned from api
-                //logout();
-            }
-
-            const error = (data && data.message) || response.statusText;
+            const error = response.statusText;
             return Promise.reject(error);
+        } else {
+            const data = text && JSON.parse(text);
+            return data;
         }
-
-        return data;
     });
 }

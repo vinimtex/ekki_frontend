@@ -10,22 +10,34 @@ import { Dashboard } from './Dashboard';
 import { PrivateRoute } from './components/PrivateRoute';
 import { RegisterPage } from './RegisterPage/RegisterPage';
 import { Cards } from './Cards/Cards';
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+import { alertActions } from './actions/alert.action';
+import { Transaction } from './Transaction/Trasaction';
+import { Deposit } from './Deposit/Deposit';
+import { HistoryPage } from './Transaction/HistoryPage';
 
-class App extends Component {
+const MySwal = withReactContent(Swal)
+
+class App extends React.Component {
   constructor(props) {
     super(props)
-
-    const { dispatch } = this.props
-
   }
 
   render() {
+    const { alert } = this.props
+    if(alert.type) {
+      MySwal.fire(alert)
+    }
     return (
       <div className="App">
         <Router>
           <div className="container">
             <PrivateRoute exact path="/" component={Dashboard} />
             <PrivateRoute path="/cards" component={Cards} />
+            <PrivateRoute path="/transfer" component={Transaction} />
+            <PrivateRoute path="/deposit" component={Deposit} />
+            <PrivateRoute path="/transactions/history" component={HistoryPage} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
           </div>
@@ -36,11 +48,11 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-  const { user } = state;
+  const { alert } = state;
   return {
-      user
+      alert
   };
 }
 
 const connectedApp = connect(mapStateToProps)(App)
-export default App
+export { connectedApp as App }; 
