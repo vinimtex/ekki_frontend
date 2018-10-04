@@ -7,6 +7,8 @@ export function user(state = initialState, action) {
       return state
     case 'DEPOSIT':
       return state
+    case 'REMOVE_CONTACT':
+      return state
     case 'GET_CONTACTS':
       return {
         ...state,

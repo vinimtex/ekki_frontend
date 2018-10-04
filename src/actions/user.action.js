@@ -16,7 +16,8 @@ export const userActions = {
     getContacts,
     transfer,
     deposit,
-    getTransactionsHistory
+    getTransactionsHistory,
+    removeContact
 };
 
 function login(email, password) {
@@ -162,6 +163,23 @@ function getContacts(userId) {
             );
     };
     function success(contacts) { return { type: 'GET_CONTACTS', contacts } }
+    function failure(error) { return { type: 'SERVICE_FAILURE', error } }
+}
+
+function removeContact(userId, contactId) {
+    return dispatch => {
+        userService.removeContact(userId, contactId)
+            .then(
+                result => { 
+                    dispatch(success(result));
+                    dispatch(getContacts(userId))
+                },
+                error => {
+                    dispatch(failure(error));
+                }
+            );
+    };
+    function success(result) { return { type: 'REMOVE_CONTACT', result } }
     function failure(error) { return { type: 'SERVICE_FAILURE', error } }
 }
 

@@ -16,6 +16,7 @@ import { alertActions } from './actions/alert.action';
 import { Transaction } from './Transaction/Trasaction';
 import { Deposit } from './Deposit/Deposit';
 import { HistoryPage } from './Transaction/HistoryPage';
+import { Contacts } from './Contacts/Contacts';
 
 const MySwal = withReactContent(Swal)
 
@@ -38,6 +39,7 @@ class App extends React.Component {
             <PrivateRoute path="/transfer" component={Transaction} />
             <PrivateRoute path="/deposit" component={Deposit} />
             <PrivateRoute path="/transactions/history" component={HistoryPage} />
+            <PrivateRoute path="/contacts" component={Contacts} />
             <Route path="/login" component={LoginPage} />
             <Route path="/register" component={RegisterPage} />
           </div>

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { userActions } from '../actions'
 import './Dashboard.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCreditCard, faLocationArrow, faHandHoldingUsd, faHistory  } from '@fortawesome/free-solid-svg-icons'
+import { faCreditCard, faLocationArrow, faHandHoldingUsd, faHistory, faAddressBook  } from '@fortawesome/free-solid-svg-icons'
 
 
 class Dashboard extends React.Component {
@@ -56,6 +56,13 @@ class Dashboard extends React.Component {
                             <FontAwesomeIcon icon={faCreditCard} size="lg"/>
                             <br/>
                             Cartões de Crédito
+                        </Link>
+                    </div>
+                    <div className="p-2 flex-fill">
+                        <Link to="/contacts" className="btn btn-block btn-outline-light">
+                            <FontAwesomeIcon icon={faAddressBook} size="lg"/>
+                            <br/>
+                            Contatos/Favorecidos
                         </Link>
                     </div>
                 </div>

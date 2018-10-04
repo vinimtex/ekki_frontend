@@ -5,7 +5,8 @@ export const userService = {
     login,
     logout,
     register,
-    getContacts
+    getContacts,
+    removeContact
 };
 
 function login(email, password) {
@@ -54,6 +55,19 @@ function getContacts(userId) {
         .then(handleResponse)
         .then(contacts => {
             return contacts;
+        });
+}
+
+function removeContact(userId, contactId) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: tokenHeader()
+    };
+
+    return fetch(api + 'users/' + userId + '/contacts/' + contactId, requestOptions)
+        .then(handleResponse)
+        .then(result => {
+            return {result:result};
         });
 }
 
